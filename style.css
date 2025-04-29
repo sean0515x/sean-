@@ -1,17 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600&display=swap');
+
+:root {
+  --bg-dark: #0f172a;
+  --bg-darker: #1e293b;
+  --text-light: #f8fafc;
+  --accent-blue: #60a5fa;
+  --accent-purple: #c084fc;
+  --danger-red: #ef4444;
+  --cart-bg: #111827;
+}
+
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Oxanium', 'Segoe UI', Tahoma, sans-serif;
   margin: 0;
   padding: 0;
-  background: linear-gradient(to right, #f9fafb, #f3f4f6);
-  color: #1f2937;
+  background: linear-gradient(to right, var(--bg-dark), var(--bg-darker));
+  color: var(--text-light);
 }
 
 h1 {
   text-align: center;
   font-size: 42px;
   margin: 40px 0 20px;
-  color: #111827;
-  letter-spacing: 1px;
+  color: var(--accent-purple);
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 8px var(--accent-blue);
 }
 
 .filters {
@@ -26,11 +39,12 @@ h1 {
 #search-input, #category-select, #sort-select {
   padding: 12px 15px;
   font-size: 16px;
-  border: 1px solid #d1d5db;
+  border: 1px solid #334155;
   border-radius: 10px;
   width: 220px;
-  background-color: white;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  background-color: #1e293b;
+  color: var(--text-light);
+  box-shadow: 0 0 5px rgba(96, 165, 250, 0.2);
 }
 
 #product-list {
@@ -43,17 +57,19 @@ h1 {
 }
 
 .product-card {
-  background-color: white;
+  background-color: #1e293b;
+  border: 2px solid transparent;
   border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  box-shadow: 0 0 10px rgba(96, 165, 250, 0.3);
   padding: 20px;
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s;
+  transition: transform 0.3s ease, box-shadow 0.3s, border 0.3s;
 }
 
 .product-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+  transform: scale(1.03);
+  border: 2px solid var(--accent-blue);
+  box-shadow: 0 0 20px var(--accent-blue);
 }
 
 .product-card img {
@@ -72,56 +88,62 @@ h1 {
 .product-card p {
   margin: 6px 0;
   font-size: 15px;
-  color: #4b5563;
+  color: #cbd5e1;
 }
 
 .product-card button {
   padding: 10px 16px;
-  background: linear-gradient(to right, #34d399, #10b981);
+  background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
   margin-top: 12px;
-  transition: background 0.3s;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 10px rgba(96, 165, 250, 0.3);
 }
 
 .product-card button:hover {
-  background: linear-gradient(to right, #059669, #047857);
+  transform: scale(1.05);
+  box-shadow: 0 0 20px var(--accent-blue);
 }
 
 .product-card button:disabled {
-  background-color: #e5e7eb;
-  color: #9ca3af;
+  background-color: #000000;
+  color: #1a1b1b;
   cursor: not-allowed;
+  border: 1px solid #080808;
+  opacity: 0.8;
 }
 
 .restock-button {
   margin-top: 10px;
   padding: 6px 14px;
-  background-color: #818cf8;
+  background: linear-gradient(to right, #6366f1, #7c3aed);
   color: white;
   border: none;
   border-radius: 8px;
   font-size: 13px;
   cursor: pointer;
   margin-left: 10px;
-  transition: background-color 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 8px rgba(124, 58, 237, 0.4);
 }
 
 .restock-button:hover {
-  background-color: #6366f1;
+  transform: scale(1.05);
+  box-shadow: 0 0 14px rgba(124, 58, 237, 0.6);
 }
 
 #cart-list {
   max-width: 600px;
   margin: 0 auto;
-  background-color: #ffffff;
+  background-color: var(--cart-bg);
   padding: 25px;
   border-radius: 14px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  border: 1px solid #334155;
+  box-shadow: 0 0 15px rgba(96, 165, 250, 0.2);
 }
 
 .cart-item {
@@ -129,7 +151,7 @@ h1 {
   justify-content: space-between;
   align-items: center;
   padding: 12px 0;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid #334155;
   font-size: 16px;
 }
 
@@ -140,7 +162,7 @@ h1 {
 .cart-item div button {
   margin-left: 5px;
   padding: 6px 10px;
-  background-color: #6b7280;
+  background-color: #475569;
   color: white;
   border: none;
   border-radius: 6px;
@@ -150,22 +172,22 @@ h1 {
 }
 
 .cart-item div button:hover {
-  background-color: #4b5563;
+  background-color: #64748b;
 }
 
 .cart-item button:last-child {
-  background-color: #ef4444;
+  background-color: var(--danger-red);
 }
 
 .cart-item button:last-child:hover {
-  background-color: #dc2626;
+  background-color: #b91c1c;
 }
 
 #total-price {
   text-align: right;
   font-size: 22px;
   font-weight: bold;
-  color: #ef4444;
+  color: var(--danger-red);
   margin: 20px auto;
   max-width: 600px;
 }
@@ -179,22 +201,25 @@ h1 {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, box-shadow 0.2s;
   color: white;
+  box-shadow: 0 0 12px rgba(96, 165, 250, 0.3);
 }
 
 #checkout-button {
-  background-color: #3b82f6;
+  background: linear-gradient(to right, #3b82f6, #60a5fa);
 }
 
 #checkout-button:hover {
-  background-color: #2563eb;
+  background: linear-gradient(to right, #2563eb, #3b82f6);
+  box-shadow: 0 0 18px #60a5fa;
 }
 
 #clear-cart-button {
-  background-color: #f59e0b;
+  background: linear-gradient(to right, #f59e0b, #f97316);
 }
 
 #clear-cart-button:hover {
-  background-color: #d97706;
+  background: linear-gradient(to right, #d97706, #ea580c);
+  box-shadow: 0 0 18px #f59e0b;
 }
