@@ -31,6 +31,27 @@
   <button id="checkout-button">結帳</button>
   <button id="clear-cart-button">清空購物車</button>
 
-  <script src="script.js"></script>
+  <!-- 放在 script.js 之前 -->
+<!-- 付款視窗 -->
+<div id="payment-modal" class="modal hidden">
+  <div class="modal-content">
+    <h2>💳 付款確認</h2>
+    <p id="payment-summary"></p>
+
+    <label for="payment-method">請選擇付款方式：</label>
+    <select id="payment-method">
+      <option value="credit">線上刷卡</option>
+      <option value="linepay">LINE Pay</option>
+      <option value="cash">貨到付款</option>
+    </select>
+
+    <div style="margin-top: 20px;">
+      <button id="confirm-payment-button">確認付款</button>
+      <button id="cancel-payment-button">取消</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
