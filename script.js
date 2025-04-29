@@ -127,22 +127,32 @@ function restockProduct(id) {
   const product = products.find(p => p.id === id);
   if (!product) return;
 
-  let valid = false;
-  while (!valid) {
-    const input = prompt(`請輸入要補貨的數量（目前庫存：${product.stock}）\n輸入空白可取消補貨。`);
+  while (true) {
+    const input = prompt(
+      `🔧 補貨操作\n商品名稱：${product.name}\n目前庫存：${product.stock} 件\n請輸入要補貨的數量（按取消可中止）：`
+    );
+
     if (input === null || input.trim() === "") {
-      alert("補貨已取消。");
+      alert("❌ 補貨已取消。");
       return;
     }
 
-    const qty = parseInt(input);
-    if (!isNaN(qty) && qty > 0) {
+    const qty = parseInt(input.trim());
+
+    if (isNaN(qty) || qty <= 0) {
+      alert("⚠️ 請輸入一個有效的『正整數』作為補貨數量！");
+      continue; // 讓使用者重新輸入
+    }
+
+    const confirmMsg = `✅ 確認補貨：\n商品：${product.name}\n補貨數量：${qty} 件\n補貨後庫存：${product.stock + qty} 件\n\n是否確認補貨？`;
+    if (confirm(confirmMsg)) {
       product.stock += qty;
-      alert(`✅ 補貨成功！${product.name} 新庫存為 ${product.stock}`);
+      alert(`🎉 補貨成功！「${product.name}」新庫存為 ${product.stock} 件`);
       updateCartUI();
-      valid = true;
+      return;
     } else {
-      alert("⚠️ 請輸入有效的正整數！");
+      alert("❌ 補貨已取消，未變更庫存。");
+      return;
     }
   }
 }
