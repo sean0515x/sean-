@@ -141,12 +141,13 @@ function restockProduct(id) {
 
     if (isNaN(qty) || qty <= 0) {
       alert("⚠️ 請輸入一個有效的『正整數』作為補貨數量！");
-      continue; // 讓使用者重新輸入
+      continue;
     }
 
-    const confirmMsg = `✅ 確認補貨：\n商品：${product.name}\n補貨數量：${qty} 件\n補貨後庫存：${product.stock + qty} 件\n\n是否確認補貨？`;
+    const newStock = product.stock + qty;
+    const confirmMsg = `✅ 確認補貨：\n商品：${product.name}\n補貨數量：${qty} 件\n補貨後庫存將為：${newStock} 件\n\n是否確認補貨？`;
     if (confirm(confirmMsg)) {
-      product.stock += qty;
+      product.stock = newStock;
       alert(`🎉 補貨成功！「${product.name}」新庫存為 ${product.stock} 件`);
       updateCartUI();
       return;
@@ -156,17 +157,6 @@ function restockProduct(id) {
     }
   }
 }
-
-function notifyOwnerDiscord(orderDetails) {
-  fetch("https://discord.com/api/webhooks/1366757938508595251/0-htYA_OHYUQpV5JxlleuOvLDo2nfgUQ-0NMye9dfy3QbMC7gSeVkGJvU_tse2y6--vV", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      content: `📦 **新訂單通知！**\n${orderDetails}`
-    })
-  });
-}
-
 checkoutButton.addEventListener('click', () => {
   if (cart.length === 0) {
     alert("購物車是空的！");
@@ -174,17 +164,10 @@ checkoutButton.addEventListener('click', () => {
   }
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const orderSummary = cart.map(i => `${i.name} x${i.quantity}`).join(', ') + `\n總金額：$${total}`;
-  alert(`感謝購買！總金額為 $${total}`);
-
-  notifyOwnerDiscord(orderSummary); // ✅ Discord 通知
-
-  cart.length = 0;
-  renderCart();
-  updateTotalPrice();
-  saveCart();
+  const summary = cart.map(i => `${i.name} x${i.quantity}`).join(', ');
+  document.getElementById('payment-summary').innerText = `${summary}\n\n總金額：$${total}`;
+  document.getElementById('payment-modal').classList.remove('hidden');
 });
-
 clearCartButton.addEventListener('click', () => {
   if (confirm("確定要清空購物車嗎？")) {
     for (const item of cart) {
@@ -195,6 +178,32 @@ clearCartButton.addEventListener('click', () => {
     updateCartUI();
     saveCart();
   }
+});
+document.getElementById('confirm-payment-button').addEventListener('click', () => {
+  const paymentMethod = document.getElementById('payment-method').value;
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const summary = cart.map(i => `${i.name} x${i.quantity}`).join(', ');
+  const methodText = {
+    credit: "線上刷卡",
+    linepay: "LINE Pay",
+    cash: "貨到付款"
+  }[paymentMethod];
+
+  const confirmMsg = `🧾 訂單摘要：\n${summary}\n\n💰 總金額：$${total}\n💳 付款方式：${methodText}\n\n是否確認付款？`;
+
+  if (!confirm(confirmMsg)) return;
+
+  alert(`✅ 感謝您的付款！已使用 ${methodText} 完成付款，總金額 $${total} 元`);
+
+  notifyOwnerDiscord(`${summary}\n總金額：$${total}\n付款方式：${methodText}`);
+
+  cart.length = 0;
+  updateCartUI();
+  saveCart();
+  document.getElementById('payment-modal').classList.add('hidden');
+});
+document.getElementById('cancel-payment-button').addEventListener('click', () => {
+  document.getElementById('payment-modal').classList.add('hidden');
 });
 
 function updateCartUI() {
