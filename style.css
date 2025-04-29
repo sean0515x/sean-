@@ -223,3 +223,52 @@ h1 {
   background: linear-gradient(to right, #d97706, #ea580c);
   box-shadow: 0 0 18px #f59e0b;
 }
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: #1f2937;
+  padding: 30px;
+  border-radius: 14px;
+  text-align: center;
+  color: #f8fafc;
+  box-shadow: 0 0 20px #60a5fa;
+}
+
+.modal-content button {
+  margin: 10px;
+  padding: 10px 20px;
+  background: linear-gradient(to right, #3b82f6, #60a5fa);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.modal-content button:hover {
+  background: linear-gradient(to right, #2563eb, #3b82f6);
+}
+#payment-method {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #111827;
+  color: white;
+  border: 1px solid #374151;
+  width: 80%;
+}
