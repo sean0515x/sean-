@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <title>商品購物車系統</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Sean的商店（完整版）</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>sean的商店</h1>
+  <h1>Sean的商店</h1>
+
+  <div id="login-area" style="text-align:center; margin:20px;">
+    <p id="user-info">尚未登入</p>
+    <button id="google-login">使用 Google 登入</button>
+    <button id="facebook-login">使用 Facebook 登入</button>
+    <button id="logout-button" style="display:none;">登出</button>
+  </div>
 
   <div class="filters">
     <input type="text" id="search-input" placeholder="搜尋商品..." />
@@ -20,38 +27,63 @@
       <option value="default">排序方式</option>
       <option value="low">價格：低到高</option>
       <option value="high">價格：高到低</option>
+      <option value="name">名稱排序</option>
     </select>
   </div>
 
   <div id="product-list"></div>
 
-  <h2>購物車</h2>
+  <h2>❤️ 我的收藏</h2>
+  <div id="favorites-list"></div>
+
+  <h2>🛒 購物車</h2>
   <div id="cart-list"></div>
   <h3 id="total-price">總金額：$0</h3>
   <button id="checkout-button">結帳</button>
   <button id="clear-cart-button">清空購物車</button>
 
-  <!-- 放在 script.js 之前 -->
-<!-- 付款視窗 -->
-<div id="payment-modal" class="modal hidden">
-  <div class="modal-content">
-    <h2>💳 付款確認</h2>
-    <p id="payment-summary"></p>
+  <h2>📜 歷史訂單</h2>
+  <ul id="order-history"></ul>
 
-    <label for="payment-method">請選擇付款方式：</label>
-    <select id="payment-method">
-      <option value="credit">線上刷卡</option>
-      <option value="linepay">LINE Pay</option>
-      <option value="cash">貨到付款</option>
-    </select>
-
-    <div style="margin-top: 20px;">
-      <button id="confirm-payment-button">確認付款</button>
-      <button id="cancel-payment-button">取消</button>
+  <!-- 模態視窗 -->
+  <div id="payment-modal" class="modal hidden">
+    <div class="modal-content">
+      <h2>💳 付款確認</h2>
+      <p id="payment-summary"></p>
+      <label for="payment-method">請選擇付款方式：</label>
+      <select id="payment-method">
+        <option value="credit">線上刷卡</option>
+        <option value="linepay">LINE Pay</option>
+        <option value="cash">貨到付款</option>
+      </select>
+      <div style="margin-top: 20px;">
+        <button id="confirm-payment-button">確認付款</button>
+        <button id="cancel-payment-button">取消</button>
+      </div>
     </div>
   </div>
-</div>
 
-<script src="script.js"></script>
+  <!-- Firebase SDKs（使用 compat 版本） -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    // Firebase 配置（你的專案資訊）
+    const firebaseConfig = {
+      apiKey: "AIzaSyD90xVQPCRHfYphhWIZME9jEywi6Fqq3eI",
+      authDomain: "sean-d7869.firebaseapp.com",
+      projectId: "sean-d7869",
+      storageBucket: "sean-d7869.appspot.com",
+      messagingSenderId: "444717178750",
+      appId: "1:444717178750:web:17867a35e7e4ae6f9e5d2f"
+    };
+
+    // 初始化 Firebase（使用 compat 版本）
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <!-- 主邏輯 -->
+  <script src="script.js"></script>
 </body>
 </html>
